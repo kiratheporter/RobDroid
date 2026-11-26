@@ -6,7 +6,7 @@ on:
       app_id:
         description: 'Rob Run Steam App ID'
         required: true
-        default: '480'
+        default: '4262460'
 
 jobs:
   build:
