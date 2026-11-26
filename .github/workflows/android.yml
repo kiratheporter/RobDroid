@@ -1,0 +1,46 @@
+name: Build RobDroid APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_id:
+        description: 'Rob Run Steam App ID'
+        required: true
+        default: '480'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup .NET (For DepotDownloader CLI)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install DepotDownloader CLI
+        run: |
+          dotnet tool install --global DepotDownloader
+
+      - name: Build RobDroid.apk
+        run: |
+          cd android-project
+          gradle assembleDebug --no-daemon
+          cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/RobDroid.apk
+
+      - name: Upload RobDroid.apk Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RobDroid-APK
+          path: android-project/app/build/outputs/apk/debug/RobDroid.apk
