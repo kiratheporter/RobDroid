@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#080808"
+    tools:context=".MainActivity">
+
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#121212"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ROBDROID - DEPLOYER"
+            android:textAlignment="center"
+            android:textColor="#B71C1C"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Rob Run PC to Android Installer"
+            android:textAlignment="center"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Main Content -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/statusLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Steam Account Button -->
+            <Button
+                android:id="@+id/btnOpenSteamLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#B71C1C"
+                android:drawableStart="@android:drawable/ic_lock_lock"
+                android:text="STEAM HESABI: GİRİŞ YAPILMADI"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- App ID -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Steam App ID"
+                app:boxBackgroundColor="#1A1A1A"
+                app:boxStrokeColor="#B71C1C"
+                app:hintTextColor="#B71C1C">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAppId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="4262460"
+                    android:textColor="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Manifest URL (Auto, Disabled) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Paket Manifest URL (Otomatik)"
+                app:boxBackgroundColor="#1A1A1A"
+                app:boxStrokeColor="#555555"
+                app:hintTextColor="#AAAAAA">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPackageUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:textColor="#888888" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Options -->
+            <CheckBox
+                android:id="@+id/cbOnlineMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Online / Multiplayer Aktif"
+                android:textColor="#FFFFFF"
+                android:buttonTint="#B71C1C"/>
+
+            <CheckBox
+                android:id="@+id/cbOptimize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Android Performans Optimizasyonu (75% / 60 FPS)"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp"
+                android:buttonTint="#B71C1C"/>
+
+            <!-- Install Button -->
+            <Button
+                android:id="@+id/btnDownloadInstall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="#B71C1C"
+                android:padding="14dp"
+                android:text="GÜNCELLEME KONTROLÜ VE KURULUM"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Status/Footer -->
+    <LinearLayout
+        android:id="@+id/statusLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#121212"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@id/btnLaunchGame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:progress="0"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:progressTint="#B71C1C"/>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Durum: Hazir. Steam hesabini baglayin."
+            android:textAlignment="center"
+            android:textColor="#CCCCCC"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Launch Game Button -->
+    <Button
+        android:id="@+id/btnLaunchGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="#222222"
+        android:enabled="false"
+        android:padding="14dp"
+        android:text="ROB RUN BAŞLAT"
+        android:textColor="#888888"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
