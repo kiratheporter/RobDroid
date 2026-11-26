@@ -13,6 +13,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,11 +26,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          api-level: 34
-          build-tools: '34.0.0'
+      - name: Install Android SDK Packages
+        run: |
+          set -e
+          SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -name "sdkmanager" -type f | head -n 1)
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" \
+            "platform-tools" \
+            "platforms;android-34" \
+            "build-tools;34.0.0"
 
       - name: Setup .NET (For DepotDownloader CLI)
         uses: actions/setup-dotnet@v4
@@ -40,13 +47,15 @@ jobs:
 
       - name: Build RobDroid.apk
         run: |
+          set -e
           cd android-project
-          chmod +x ./gradlew 2>/dev/null || true
-          if [ -x "./gradlew" ]; then
+          if [ -f "./gradlew" ]; then
+            chmod +x ./gradlew
             ./gradlew assembleDebug --no-daemon
           else
             gradle assembleDebug --no-daemon
           fi
+          mkdir -p app/build/outputs/apk/debug
           cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/RobDroid.apk
 
       - name: Upload RobDroid.apk Artifact
