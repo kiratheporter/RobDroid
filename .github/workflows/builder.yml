@@ -1,6 +1,8 @@
 name: Build RobDroid APK
 
 on:
+  push:
+    branches: [ "main" ]
   workflow_dispatch:
     inputs:
       app_id:
@@ -23,6 +25,9 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 34
+          build-tools: '34.0.0'
 
       - name: Setup .NET (For DepotDownloader CLI)
         uses: actions/setup-dotnet@v4
@@ -36,7 +41,12 @@ jobs:
       - name: Build RobDroid.apk
         run: |
           cd android-project
-          gradle assembleDebug --no-daemon
+          chmod +x ./gradlew 2>/dev/null || true
+          if [ -x "./gradlew" ]; then
+            ./gradlew assembleDebug --no-daemon
+          else
+            gradle assembleDebug --no-daemon
+          fi
           cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/RobDroid.apk
 
       - name: Upload RobDroid.apk Artifact
