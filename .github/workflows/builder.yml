@@ -36,14 +36,20 @@ jobs:
             "platforms;android-34" \
             "build-tools;34.0.0"
 
-      - name: Setup .NET (For DepotDownloader CLI)
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
       - name: Install DepotDownloader CLI
         run: |
-          dotnet tool install --global DepotDownloader
+          mkdir -p "$HOME/.local/bin/depotdownloader"
+          curl -fsSL "https://api.github.com/repos/SteamRE/DepotDownloader/releases/latest" \
+            | grep -oE "https://[^\"]+DepotDownloader-linux-x64[^\"]*\.zip" \
+            | head -n 1 \
+            | xargs -r curl -fsSL -o /tmp/dd.zip
+          if [ -s /tmp/dd.zip ]; then
+            unzip -qo /tmp/dd.zip -d "$HOME/.local/bin/depotdownloader"
+            chmod +x "$HOME/.local/bin/depotdownloader/DepotDownloader" 2>/dev/null || true
+            echo "$HOME/.local/bin/depotdownloader" >> "$GITHUB_PATH"
+          else
+            echo "DepotDownloader release archive not found; continuing APK build."
+          fi
 
       - name: Build RobDroid.apk
         run: |
