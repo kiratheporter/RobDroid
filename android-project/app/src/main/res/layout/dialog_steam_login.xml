@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#121212"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@android:drawable/ic_lock_lock"
+        android:drawablePadding="8dp"
+        android:text="STEAM HESABI YÖNETİMİ"
+        android:textColor="#B71C1C"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDialogSteamUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Durum: Giriş Yapılmadı"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- Username -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSteamUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Steam Kullanıcı Adı"
+        app:boxBackgroundColor="#1A1A1A"
+        app:boxStrokeColor="#B71C1C"
+        app:hintTextColor="#B71C1C"
+        app:endIconMode="clear_text"
+        app:endIconTint="#B71C1C">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSteamUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
+            android:textColor="#FFFFFF" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSteamPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:hint="Şifre"
+        app:boxBackgroundColor="#1A1A1A"
+        app:boxStrokeColor="#B71C1C"
+        app:hintTextColor="#B71C1C"
+        app:endIconMode="password_toggle"
+        app:endIconTint="#B71C1C">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSteamPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="#FFFFFF" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/btnDialogLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#B71C1C"
+        android:text="GİRİŞ YAP"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <!-- Logout Button (Hidden by default) -->
+    <Button
+        android:id="@+id/btnDialogLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#333333"
+        android:text="ÇIKIŞ YAP"
+        android:textColor="#AAAAAA"
+        android:visibility="gone" />
+
+</LinearLayout>
